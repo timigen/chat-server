@@ -13,6 +13,7 @@ export class Server {
   }
 
   public start() {
+    this.log("_______ SERVER STARTED _______");
     this.server = new WebSocket.Server({ port: this.port });
     const roomName = "the shack";
     this.room = new Room(roomName);
@@ -55,6 +56,6 @@ export class Server {
   }
 
   private log(message: string) {
-    console.log(new Date() + " " + message);
+    console.log(new Date().toISOString() + " " + message);
   }
 }
