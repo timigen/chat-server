@@ -13,9 +13,9 @@ export class Server {
   }
 
   public start() {
-    this.log("_______ SERVER STARTED _______");
+    this.log("_______ SERVER STARTED _______\n\n");
     this.server = new WebSocket.Server({ port: this.port });
-    const roomName = "the shack";
+    const roomName = "default";
     this.room = new Room(roomName);
     const createEvent: IEvent = new Event(EventTypes.Create, {
       author: "system",
@@ -26,13 +26,12 @@ export class Server {
     this.room.events = [];
     this.room.events.push(createEvent);
 
+    // new connections
     this.server.on("connection", connection => {
-      /* */
-
       const connectionId = uuidv4();
       this.log("connection accepted: " + connectionId);
 
-      this.clients.push(new Client(null, connection));
+      this.clients.push(new Client(connectionId, connection));
 
       this.log("SEND ROOM " + this.room);
       connection.send(
