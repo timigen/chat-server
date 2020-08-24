@@ -1,0 +1,31 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+      "arrow-parens": false,
+      "no-console": false,
+      "no-trailing-whitespace": false,
+      "prefer-const": false,
+      "prefer-for-of": false,
+      "quotemark": false,
+      "whitespace": false,
+      "ordered-imports": false,
+      "interface-name": false,
+      "trailing-comma": [
+        true,
+        {
+          "multiline": {
+            "objects": "never",
+            "arrays": "never",
+            "functions": "never",
+            "typeLiterals": "ignore"
+          },
+          "esSpecCompliant": true
+        }
+      ]
+    },
+    "rulesDirectory": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "chat-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "node ./dist/src/main.js",
+    "format": "prettier --write ./src/**/*.ts && prettier --write ./tests/*.test.ts",
+    "lint": "tslint --project tsconfig.json",
+    "qc": "npm run format && npm run lint && npm test",
+    "build-dev": "tsc",
+    "build": "npm run qc && tsc",
+    "test": "jest --config=jest.config.js --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timigen/chat-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timigen/chat-server/issues"
+  },
+  "homepage": "https://github.com/timigen/chat-server#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.24",
+    "@types/node": "^12.12.21",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "@types/ws": "^7.2.6",
+    "uuid": "^8.2.0",
+    "ws": "^7.3.0",
+    "chat-models": "timigen/chat-models#master"
+  }
+}

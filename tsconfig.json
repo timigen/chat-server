@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+      "outDir": "./dist/",
+      "noImplicitAny": false,
+      "module": "commonjs",
+      "declaration": true,
+      "target": "es6",
+      "removeComments": true,
+      "typeRoots": [
+        "./node_modules/@types",
+        "./custom_definitions"
+    ],
+    "types": [
+      "jest",
+      "node",
+      "ws"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ],
+  "exclude": [
+    "tests/*.spec.ts"
+  ],
+  "rules": {
+    "no-trailing-whitespace": false,
+    "prefer-const": false,
+    "quotemark": false,
+    "whitespace": false,
+    "ordered-imports": false,
+    "interface-name": false,
+    "trailing-comma": [
+      false,
+      {
+        "multiline": {
+          "objects": "ignore",
+          "arrays": "ignore",
+          "functions": "ignore",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ]
+  },
+}
