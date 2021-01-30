@@ -26,29 +26,34 @@ export class Server {
     this.room.events = [];
     this.room.events.push(createEvent);
 
-    // new connections
+    // new connection
     this.server.on("connection", connection => {
+      // get then log connection id
       const connectionId = uuidv4();
       this.log("connection accepted: " + connectionId);
 
       this.clients.push(new Client(connectionId, connection));
 
-      this.log("SEND ROOM " + this.room);
+      this.log("SEND ROOM");
       connection.send(
         JSON.stringify({ type: EventTypes.Join, room: this.room })
       );
 
       connection.on("message", event => {
-        let current = event;
-        this.room.events.push(current);
+        this.room.events.push(event);
 
         for (let i = 0; i < this.clients.length; i++) {
-          this.clients[i].connection.send(current);
+          this.clients[i].connection.send(event);
         }
       });
 
       connection.on("close", () => {
-        this.log("Disconnected " + connectionId);
+        let index = this.clients.findIndex(x => x.id === connectionId);
+        this.log(this.clients[0].id);
+        if (index !== -1) {
+          this.clients.splice(index, 1);
+          this.log("Disconnected " + connectionId);
+        }
       });
     });
   }
