@@ -4,7 +4,7 @@ import { Room, EventTypes, Client, IEvent, Event, IRoom } from "chat-models";
 
 export class Server {
   private clients: Client[] = [];
-  private port;
+  private port: number;
   private room: IRoom;
   private server: any;
 
@@ -39,10 +39,9 @@ export class Server {
       );
 
       connection.on("message", event => {
-        this.log("event -> " + event);
         let current = event;
         this.room.events.push(current);
-        this.room.events = this.room.events.slice(-100);
+
         for (let i = 0; i < this.clients.length; i++) {
           this.clients[i].connection.send(current);
         }
