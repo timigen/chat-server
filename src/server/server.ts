@@ -40,7 +40,7 @@ export class Server {
       );
 
       connection.on("message", event => {
-        this.room.events.push(event);
+        this.room.events.push(JSON.parse(event));
 
         for (let i = 0; i < this.clients.length; i++) {
           this.clients[i].connection.send(event);
