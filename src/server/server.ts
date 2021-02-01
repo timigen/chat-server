@@ -33,18 +33,21 @@ export class Server {
       this.log("SEND ROOM");
       connection.send(
         JSON.stringify({
+          clientId: connectionId,
           room: this.room,
           type: EventTypes.Join
         })
       );
 
       connection.on("message", event => {
-        this.room.events.push(JSON.parse(event));
+        let evnt = JSON.parse(event);
+        evnt.color = color;
+        this.room.events.push(evnt);
 
-        console.log(event);
+        console.log(evnt);
 
         for (let i = 0; i < this.clients.length; i++) {
-          this.clients[i].connection.send(event);
+          this.clients[i].connection.send(JSON.stringify(evnt));
         }
       });
 
