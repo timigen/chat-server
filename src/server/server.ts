@@ -1,15 +1,17 @@
 import WebSocket = require("ws");
 import { v4 as uuidv4 } from "uuid";
 import { Room, EventTypes, Client, IEvent, Event, IRoom } from "chat-models";
+import { WebColors } from "../web-colors/web-colors";
 
 export class Server {
   private clients: Client[] = [];
   private port: number;
   private room: IRoom;
   private server: any;
-
+  private colors: WebColors;
   constructor(port: number = 1337) {
     this.port = port;
+    this.colors = new WebColors();
   }
 
   public start() {
@@ -17,30 +19,29 @@ export class Server {
     this.server = new WebSocket.Server({ port: this.port });
     const roomName = "default";
     this.room = new Room(roomName);
-    const createEvent: IEvent = new Event(EventTypes.Create, {
-      author: "system",
-      color: "system",
-      text: roomName + " created"
-    });
-
     this.room.events = [];
-    this.room.events.push(createEvent);
 
     // new connection
     this.server.on("connection", connection => {
       // get then log connection id
       const connectionId = uuidv4();
-      this.log("connection accepted: " + connectionId);
+      const color = this.colors.Get();
+      this.log(`"connection accepted: ${connectionId} color: ${color}`);
 
-      this.clients.push(new Client(connectionId, connection));
+      this.clients.push(new Client(connectionId, connection, color));
 
       this.log("SEND ROOM");
       connection.send(
-        JSON.stringify({ type: EventTypes.Join, room: this.room })
+        JSON.stringify({
+          room: this.room,
+          type: EventTypes.Join
+        })
       );
 
       connection.on("message", event => {
         this.room.events.push(JSON.parse(event));
+
+        console.log(event);
 
         for (let i = 0; i < this.clients.length; i++) {
           this.clients[i].connection.send(event);
