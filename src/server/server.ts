@@ -1,6 +1,6 @@
 import WebSocket = require("ws");
 import { v4 as uuidv4 } from "uuid";
-import { Room, EventTypes, Client, IEvent, Event, IRoom } from "chat-models";
+import { Room, EventTypes, Client, IRoom } from "chat-models";
 import { WebColors } from "../web-colors/web-colors";
 
 export class Server {
@@ -26,7 +26,7 @@ export class Server {
       // get then log connection id
       const connectionId = uuidv4();
       const color = this.colors.Get();
-      this.log(`"connection accepted: ${connectionId} color: ${color}`);
+      this.log(`connection accepted: ${connectionId} color: ${color}`);
 
       this.clients.push(new Client(connectionId, connection, color));
 
@@ -41,10 +41,8 @@ export class Server {
 
       connection.on("message", event => {
         let evnt = JSON.parse(event);
-        evnt.color = color;
+        evnt.data.color = color;
         this.room.events.push(evnt);
-
-        console.log(evnt);
 
         for (let i = 0; i < this.clients.length; i++) {
           this.clients[i].connection.send(JSON.stringify(evnt));
