@@ -1,7 +1,7 @@
-# Typescript Library Template
+# Chat Server
 ---
 
-Canonical typescript library template
+Chat server
 
 ## Commands
 
@@ -12,6 +12,8 @@ Canonical typescript library template
 `npm run lint`      - tslint
 
 `npm run qc`        - prettier, tslint, jest specs
+
+`npm start`         - runs server
 
 ## Unit Tests
 
