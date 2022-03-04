@@ -24,16 +24,16 @@ export class Server {
     // new connection
     this.server.on("connection", connection => {
       // get then log connection id
-      const connectionId = uuidv4();
+      const clientId = uuidv4();
       const color = this.colors.Get();
-      this.log(`connection accepted: ${connectionId} color: ${color}`);
+      this.log(`connection accepted: ${clientId} color: ${color}`);
 
-      this.clients.push(new Client(connectionId, connection, color));
+      this.clients.push(new Client(clientId, connection, color));
 
       this.log("SEND ROOM");
       connection.send(
         JSON.stringify({
-          clientId: connectionId,
+          clientId: clientId,
           room: this.room,
           type: EventTypes.Join
         })
@@ -50,11 +50,11 @@ export class Server {
       });
 
       connection.on("close", () => {
-        let index = this.clients.findIndex(x => x.id === connectionId);
+        let index = this.clients.findIndex(x => x.id === clientId);
         this.log(this.clients[0].id);
         if (index !== -1) {
           this.clients.splice(index, 1);
-          this.log("Disconnected " + connectionId);
+          this.log("Disconnected " + clientId);
         }
       });
     });
