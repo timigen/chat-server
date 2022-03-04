@@ -33,7 +33,7 @@ export class Server {
       this.log("SEND ROOM");
       connection.send(
         JSON.stringify({
-          clientId: clientId,
+          clientId,
           room: this.room,
           type: EventTypes.Join
         })
